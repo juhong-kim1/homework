@@ -32,3 +32,59 @@ public class Vector3Converter : JsonConverter<Vector3>
         writer.WriteEndObject();
     }
 }
+
+public class QuaternionConverter : JsonConverter<Quaternion>
+{
+    public override Quaternion ReadJson(JsonReader reader, Type objectType, Quaternion existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        var obj = JObject.Load(reader);
+        return new Quaternion(
+            obj["x"].Value<float>(),
+            obj["y"].Value<float>(),
+            obj["z"].Value<float>(),
+            obj["w"].Value<float>()
+        );
+    }
+
+    public override void WriteJson(JsonWriter writer, Quaternion value, JsonSerializer serializer)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName("x");
+        writer.WriteValue(value.x);
+        writer.WritePropertyName("y");
+        writer.WriteValue(value.y);
+        writer.WritePropertyName("z");
+        writer.WriteValue(value.z);
+        writer.WritePropertyName("w");
+        writer.WriteValue(value.w);
+        writer.WriteEndObject();
+    }
+}
+
+public class ColorConverter : JsonConverter<Color>
+{
+    public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        var obj = JObject.Load(reader);
+        return new Color(
+            obj["r"].Value<float>(),
+            obj["g"].Value<float>(),
+            obj["b"].Value<float>(),
+            obj["a"].Value<float>()
+        );
+    }
+
+    public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName("r");
+        writer.WriteValue(value.r);
+        writer.WritePropertyName("g");
+        writer.WriteValue(value.g);
+        writer.WritePropertyName("b");
+        writer.WriteValue(value.b);
+        writer.WritePropertyName("a");
+        writer.WriteValue(value.a);
+        writer.WriteEndObject();
+    }
+}

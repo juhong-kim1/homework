@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 
@@ -16,6 +15,8 @@ public class SaveData
 public class SaveObjData
 {
     public Vector3 position;
+    public Quaternion rotation;
+    public Color color;
 }
 
 public class JsonTest2 : MonoBehaviour
@@ -33,22 +34,37 @@ public class JsonTest2 : MonoBehaviour
 
         foreach (var objects in gameObjects)
         {
+            Renderer renderer = objects.GetComponent<Renderer>();
+            Color objectColor = renderer.material.color;
+
             SaveObjData objData = new SaveObjData()
             {
                 position = objects.transform.position,
+                rotation = objects.transform.rotation,
+                color = objectColor
             };
  
             saveData.cubes.Add(objData);
         }
-            var json = JsonConvert.SerializeObject(saveData ,new Vector3Converter());
+            var json = JsonConvert.SerializeObject(saveData ,new Vector3Converter(), new QuaternionConverter(), new ColorConverter());
             File.WriteAllText(FileFullPath, json);
     }
 
     public void Load()
     {
-            var json = File.ReadAllText(FileFullPath);
-            var position = JsonConvert.DeserializeObject<Vector3>(json, new Vector3Converter());
-            target.transform.position = position;
+        gameObjects.Clear();
+
+        var json = File.ReadAllText(FileFullPath);
+        var saveData = JsonConvert.DeserializeObject<SaveData>(json, new Vector3Converter(), new QuaternionConverter(), new ColorConverter());
+
+        foreach (var cubeData in saveData.cubes)
+        {
+            GameObject newObj = Instantiate(target, cubeData.position, Quaternion.identity);
+
+            Renderer renderer = newObj.GetComponent<Renderer>();
+            renderer.material.color = cubeData.color;
+            gameObjects.Add(newObj);
+        }
 
     }
 
@@ -64,11 +80,22 @@ public class JsonTest2 : MonoBehaviour
             float rotationX = UnityEngine.Random.Range(0f, 90f);
             float rotationY = UnityEngine.Random.Range(0f, 90f);
 
-            Vector3 position = new Vector3(randomX, randomY, 0f);
+            Color randomColor = new Color(
+               UnityEngine.Random.Range(0f, 1f),
+               UnityEngine.Random.Range(0f, 1f),
+               UnityEngine.Random.Range(0f, 1f),
+               1f);
+
+
+           Vector3 position = new Vector3(randomX, randomY, 0f);
             Vector3 Rotation = new Vector3(rotationX, rotationY, 0f);
 
-            Instantiate(target, position, Quaternion.Euler(Rotation));
-            gameObjects.Add(target);
+            GameObject newObj = Instantiate(target, position, Quaternion.Euler(Rotation));
+
+            Renderer renderer = newObj.GetComponent<Renderer>();
+            renderer.material.color = randomColor;
+
+            gameObjects.Add(newObj);
         }
     }
 }
