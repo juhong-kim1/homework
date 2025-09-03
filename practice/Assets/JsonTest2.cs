@@ -59,7 +59,7 @@ public class JsonTest2 : MonoBehaviour
 
         foreach (var cubeData in saveData.cubes)
         {
-            GameObject newObj = Instantiate(target, cubeData.position, Quaternion.identity);
+            GameObject newObj = Instantiate(target, cubeData.position, cubeData.rotation);
 
             Renderer renderer = newObj.GetComponent<Renderer>();
             renderer.material.color = cubeData.color;
