@@ -15,11 +15,29 @@ public class ItemTable : DataTable
 
     }
 
+    public Data itemData = new Data();
     private readonly Dictionary<string, Data> dictionary = new Dictionary<string, Data>();
 
 
     public override void Load(string filename)
     {
-        throw new System.NotImplementedException();
+        dictionary.Clear();
+
+        var path = string.Format(FormatPath, filename);
+        var textAsset = Resources.Load<TextAsset>(path);
+
+        var list = LoadCSV<Data>(textAsset.text);
+
+        foreach (var item in list)
+        {
+            if (!dictionary.ContainsKey(item.Id))
+            {
+                dictionary.Add(item.Id, itemData);
+            }
+            else
+            {
+                Debug.LogError($"Å° Áßº¹: {item.Id}");
+            }
+        }
     }
 }
