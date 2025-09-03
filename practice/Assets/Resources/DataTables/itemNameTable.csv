@@ -1,12 +1,12 @@
 Id,Name,Type,Price,Value,Description,Filename
-HEART,물약,consumable,50,50,회복합니다,
-BOOK,신성한 책,consumable,100,100,회복합니다,
-BOOTS_PURPLE,신발(Purple),wearing,300,50,속도가 증가합니다,
-BOOTS_WHITE,신발(White),wearing,500,60,속도가 증가합니다,
-BOW_GREEN,화살(Green),weapon,500,10,원거리에서 공격합니다,
-BOW_WHITE,화살(White),weapon,1000,30,원거리에서 공격합니다,
-FIRE_RED,점화,consumable,50,50,데미지를 줍니다(상대 치유 불가),
-SWORD,검,weapon,500,30,근거리에서 공격합니다,
-SWORD_ICE,빙결 검,weapon,600,30,근거리에서 공격합니다,
-SHIELD,방패,wearing,300,10,방어력을 올려줍니다,
-SHIELD_BLUE,단단한 방패,wearing,500,30,방어력을 올려줍니다,
+HEART,물약,consumable,50,50,회복합니다,Icon_Heart01
+BOOK,신성한 책,consumable,100,100,회복합니다,Icon_Book
+BOOTS_PURPLE,신발(Purple),wearing,300,50,속도가 증가합니다,Icon_Boots01_Purple
+BOOTS_WHITE,신발(White),wearing,500,60,속도가 증가합니다,Icon_Boots01_White
+BOW_GREEN,화살(Green),weapon,500,10,원거리에서 공격합니다,Icon_Bow02
+BOW_WHITE,화살(White),weapon,1000,30,원거리에서 공격합니다,Icon_Bow01
+FIRE_RED,점화,consumable,50,50,데미지를 줍니다(상대 치유 불가),Icon_Fire01
+SWORD,검,weapon,500,30,근거리에서 공격합니다,Icon_Sword01
+SWORD_ICE,빙결 검,weapon,600,30,근거리에서 공격합니다,Icon_Sword04
+SHIELD,방패,wearing,300,10,방어력을 올려줍니다,Icon_Shield01
+SHIELD_BLUE,단단한 방패,wearing,500,30,방어력을 올려줍니다,Icon_Shield03

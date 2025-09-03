@@ -8,7 +8,6 @@ public class StringTableText : MonoBehaviour
 
     private void Start()
     {
-        DataTableManager.StringTable.Load(id);
         textMeshPro.text = DataTableManager.StringTable.Get(id);
     }
 }

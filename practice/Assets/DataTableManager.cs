@@ -26,6 +26,10 @@ public static class DataTableManager
         tables.Add(DataTableIds.String, stringTable);
 
 #endif
+        var itemTable = new ItemTable();
+        itemTable.Load(DataTableIds.Item);
+        tables.Add(DataTableIds.Item, itemTable);
+
     }
 
     public static StringTable StringTable
@@ -35,6 +39,14 @@ public static class DataTableManager
             return Get<StringTable>(DataTableIds.String);
         } 
       
+    }
+
+    public static ItemTable ItemTable
+    {
+        get
+        {
+            return Get<ItemTable>(DataTableIds.Item);
+        }
     }
 
 

@@ -15,7 +15,6 @@ public class ItemTable : DataTable
 
     }
 
-    public Data itemData = new Data();
     private readonly Dictionary<string, Data> dictionary = new Dictionary<string, Data>();
 
 
@@ -32,12 +31,23 @@ public class ItemTable : DataTable
         {
             if (!dictionary.ContainsKey(item.Id))
             {
-                dictionary.Add(item.Id, itemData);
+                dictionary.Add(item.Id, item);
             }
             else
             {
                 Debug.LogError($"키 중복: {item.Id}");
             }
         }
+    }
+
+    public Data Get(string key)
+    {
+        if (!dictionary.ContainsKey(key))
+        {
+            Debug.Log($"아이템을 찾을 수 없습니다: {key}");
+            return null;
+        }
+
+        return dictionary[key];
     }
 }
