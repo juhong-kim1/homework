@@ -1,53 +1,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemTable : DataTable
+public enum ItemTypes
 {
-    public class Data
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string Price { get; set; }
-        public string Value { get; set; }
-        public string Description { get; set; }
-        public string Filename { get; set; }
+    Weapon,
+    Equip,
+    Consumable,
+}
 
+public class ItemData
+{
+    public string Id { get; set; }
+    public ItemTypes Type { get; set; }
+    public string Name { get; set; }
+    public string Desc { get; set; }
+    public int Value { get; set; }
+    public int Cost { get; set; }
+    public string Icon { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Id}/{Type}<{Name}/{Desc}/{Value}/{Cost}/{Icon}";
     }
 
-    private readonly Dictionary<string, Data> dictionary = new Dictionary<string, Data>();
+    public string StringName => DataTableManager.StringTable.Get(Name);
+    public string StringDesc => DataTableManager.StringTable.Get(Desc);
+
+    public Sprite spriteIcon => Resources.Load<Sprite>($"Icon/{Icon}");
+}
+
+
+
+public class ItemTable : DataTable
+{
+    private readonly Dictionary<string, ItemData> table = new Dictionary<string, Data>();
 
 
     public override void Load(string filename)
     {
-        dictionary.Clear();
+        table.Clear();
 
         var path = string.Format(FormatPath, filename);
         var textAsset = Resources.Load<TextAsset>(path);
 
-        var list = LoadCSV<Data>(textAsset.text);
+        var list = LoadCSV<ItemData>(textAsset.text);
 
         foreach (var item in list)
         {
-            if (!dictionary.ContainsKey(item.Id))
+            if (!table.ContainsKey(item.Id))
             {
-                dictionary.Add(item.Id, item);
+                table.Add(item.Id, item);
             }
             else
             {
-                Debug.LogError($"키 중복: {item.Id}");
+                Debug.LogError($"아이템 아이디 중복: {item.Id}");
             }
+        }
+
+        foreach (var item in table)
+        {
+            Debug.Log(item.Value);
         }
     }
 
-    public Data Get(string key)
+    public ItemData Get(string id)
     {
-        if (!dictionary.ContainsKey(key))
+        if (!table.ContainsKey(id))
         {
-            Debug.Log($"아이템을 찾을 수 없습니다: {key}");
+            Debug.Log($"아이템을 찾을 수 없습니다: {id}");
             return null;
         }
 
-        return dictionary[key];
+        return table[id];
     }
 }
